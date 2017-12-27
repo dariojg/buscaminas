@@ -1,4 +1,5 @@
 var arrayMatrix = []
+var mines = 0
 
 function start_game(){
     jQuery.ajax({
@@ -7,6 +8,7 @@ function start_game(){
             contentType: 'application/json; charset=utf-8',
             success: function(data) {
                 arrayMatrix = data.matrix
+                mines = data.mines
                 drawBoard()
             },
         });
@@ -17,6 +19,7 @@ function drawBoard(){
     cols = arrayMatrix[0].length
     for(var i=0; i < rows; i++){
         for( var j = 0; j < cols; j++){
+            document.getElementById("mines").innerHTML = "<h4> mines: " + mines +  "</h4>";
             var div = document.createElement("div")
             div.id = i + "" + j 
             div.addEventListener("contextmenu", markCell, false)
@@ -29,8 +32,10 @@ function drawBoard(){
 function markCell(ev){
     ev.preventDefault();
     var div_id = this.id
-    divObj = document.getElementById(div_id);
-    divObj.style.backgroundColor = "blue";
+    divObj = document.getElementById(div_id); //TODO: mark cell and substract mine only if it was not checked yet 
+    divObj.style.backgroundImage = "url(img/flag.jpeg)";
+    mines = mines - 1
+    document.getElementById("mines").innerHTML = "<h4> mines: " + mines +  "</h4>";
     return false;
 }
 
@@ -45,8 +50,11 @@ function showCell(ev){
     }
     if(arrayMatrix[parseInt(number_mines[0],10)][parseInt(number_mines[1],10)] == -1){
         divObj.style.backgroundColor = "red";
-        document.getElementById("boom").innerHTML = "<h1>BOOOM!</h1>";
+        divObj.style.backgroundImage = "url(img/bomb.png)";
+        document.getElementById("boom").innerHTML = "<h1>BOOOM!</h1>";  //TODO: Block game and not keep playing (remove events listeners??)
         document.getElementById("restart").style.display="block";
     }
+    
+    //TODO: expand cells if you do not have numbers around 	
 }
 
