@@ -4,15 +4,21 @@
 
 from random import randrange
 
+from flask import Flask
+from flask_restful import Resource, Api
+
 
 class Board:
     """
     The game board, configure matrix with mines and numbers
     """
-    HEIGHT = 8
-    WIDTH = 8
-    matrix = [[]]
-    AMOUNT_MINES = 20
+    
+    def __init__(self, size=8, amount_mines=20, *args, **kwargs):
+        self.HEIGHT = size
+        self.WIDTH = size
+        self.AMOUNT_MINES = amount_mines
+        self.generate_matrix()
+        self.load_mines_in_matrix()
 
     def generate_matrix(self):
         """
@@ -33,5 +39,24 @@ class Board:
     # TODO:
     def load_number_around_mines(self):
         pass
+
+
+app = Flask(__name__)
+api = Api(app)
+
+
+class RestBoardDefault(Resource):
+    """
+    Rest service for load a default game board
+    """
+    def get(self):
+        return {'matrix': Board().matrix}
+   
+
+api.add_resource(RestBoardDefault, '/start_buscaminas/')
+    
+if __name__ == '__main__':
+    app.run(port=8000)
+
 
 
