@@ -10,7 +10,7 @@ El lado cliente dibuja el tablero a partir de una matriz obtenida a través del 
 métodos rest: 
 localhost:8000/start_buscaminas
 
-localhost:8000/board_custom/[size]/[mines]
+localhost:8000/board_custom/size/mines  (size y mines son parámetros)
 
 ## Para correr el proyecto
 
