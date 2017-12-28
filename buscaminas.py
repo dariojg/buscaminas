@@ -74,10 +74,25 @@ class RestBoardDefault(Resource):
                 'matrix': board.matrix,
                 'mines': board.AMOUNT_MINES
                 }
-   
+
+
+class RestBoardCustom(Resource):
+    """
+    Create a board custom
+    parameters: <size>/>mines>  - matrix size, amount mines
+    """
+    def get(self, size, mines):
+        board = Board(size=int(size), amount_mines=int(mines))
+        return {
+                'matrix': board.matrix,
+                'mines': board.AMOUNT_MINES
+                }
+
 
 api.add_resource(RestBoardDefault, '/start_buscaminas/')
-    
+api.add_resource(RestBoardCustom, '/board_custom/<size>/<mines>/')
+
+
 if __name__ == '__main__':
     app.run(port=8000)
 
