@@ -8,8 +8,9 @@ En el lado servidor se genera el tablero para el juego, con sus dimensiones, can
 El lado cliente dibuja el tablero a partir de una matriz obtenida a través del servicio rest y maneja la lógica de presentación y eventos de click del usuario.
 
 métodos rest: 
-	localhost:8000/start_buscaminas/
-	localhost:8000/board_custom/<size>/<mines>/
+localhost:8000/start_buscaminas
+
+localhost:8000/board_custom/[size]/[mines]
 
 ## Para correr el proyecto
 
